@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  managecampaigns:
+    image: managecampaigns
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+  celery:
+    build: .
+    command: celery -A tasks worker -l info -P gevent
+    depends_on:
+      - managecampaigns
+    
